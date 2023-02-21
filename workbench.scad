@@ -3,15 +3,20 @@ include <helpers.scad>;
 /* [Enclosure] */
 
 // Select type of enclosure
-boxType = "hammond1590b"; // [hammond1550a: Hammond 1550A, hammond1550b: Hammond 1550B,hammond1550p: Hammond 1550P,hammond1550q: Hammond 1550Q, hammond1590a: Hammond 1590A, hammond1590b: Hammond 1590B, hammond1590g: Hammond 1590G]
+boxType = "cumpsd"; // [hammond1550a: Hammond 1550A, hammond1550b: Hammond 1550B,hammond1550p: Hammond 1550P,hammond1550q: Hammond 1550Q, hammond1590a: Hammond 1590A, hammond1590b: Hammond 1590B, hammond1590g: Hammond 1590G]
+
+// Only for boxType cumpsd
+boxLength = 50;
+boxWidth = 50;
+boxHeight = 10;
 
 // Select color of the enclosure
-boxColor = "gray"; // [gray, silver, black, blue, green, lightgray, orange, purple, red, yellow]
+boxColor = "lightgray"; // [gray, silver, black, blue, green, lightgray, orange, purple, red, yellow]
 
 /* [510 connector] */
 
 // Select your 510 connector
-type_510_connector = "varitube22mmV2Slotted"; // [fdv15.5mmV4: Fat Daddy Vapes V4 15.5mm, fdv22mmV4: Fat Daddy Vapes V4 22mm, fdv30mmV4: Fat Daddy Vapes V4 30mm, fdv15.5mmV4lp: Fat Daddy Vapes V4 15.5mm Low Profile, fdv22mmV4lp: Fat Daddy Vapes V4 22mm Low Profile, fdv22mmV4lps: Fat Daddy Vapes V4 22mm Low Profile Short, varitube12mmBottomFeed: Varitube 12mm Bottom Feed, varitube14mm: Varitube 14mm, varitube22mmBottomFeed: Varitube 22mm Bottom Feed, varitube22mmV2Flat: Varitube 22mm Flat V2, varitube22mmV2Slotted: Varitube 22mm Slotted V2, varitube28.5mm: Varitube 28.5mm]
+type_510_connector = "none"; // [fdv15.5mmV4: Fat Daddy Vapes V4 15.5mm, fdv22mmV4: Fat Daddy Vapes V4 22mm, fdv30mmV4: Fat Daddy Vapes V4 30mm, fdv15.5mmV4lp: Fat Daddy Vapes V4 15.5mm Low Profile, fdv22mmV4lp: Fat Daddy Vapes V4 22mm Low Profile, fdv22mmV4lps: Fat Daddy Vapes V4 22mm Low Profile Short, varitube12mmBottomFeed: Varitube 12mm Bottom Feed, varitube14mm: Varitube 14mm, varitube22mmBottomFeed: Varitube 22mm Bottom Feed, varitube22mmV2Flat: Varitube 22mm Flat V2, varitube22mmV2Slotted: Varitube 22mm Slotted V2, varitube28.5mm: Varitube 28.5mm]
 // Select color of the 510 connector
 color_510_connector = "silver"; // [gray, silver, black]
 
@@ -35,7 +40,7 @@ tolerance_510 = 0.25; //[-5:0.01:5]
 /* [Fire Switch] */
 
 // Enable a fire switch?
-enableFireSwitch = "yes"; // [yes, no]
+enableFireSwitch = "no"; // [yes, no]
 // Select type of fire switch
 fireSwitchType = "cloneTec12mmRaised"; // [cloneTec12mmFlat: CloneTec 12mm Flat, cloneTec12mmRaised: CloneTec 12mm Raised, vandal16mmFlat: Vandal Proof 16mm Flat, vandal16mmRaised: Vandal Proof 16mm Raised, vandal19mmFlat: Vandal Proof 19mm Flat, vandal19mmRaised: Vandal Proof 19mm Raised]
 // Select color of fire switch
@@ -61,7 +66,7 @@ toleranceFireSwitch = 0.25; //[-5:0.01:5]
 /* [Volt Meter] */
 
 // Enable the volt meter?
-enableVoltMeter = "yes"; // [yes, no]
+enableVoltMeter = "no"; // [yes, no]
 // Select your volt meter type
 voltMeterType = "seedVoltMeterGreen"; // [seedVoltMeterGreen: Seed Volt Meter Green, seedVoltMeteryellow: Seed Volt Meter Yellow, seedVoltMeterRed: Seed Volt Meter Red, seedVoltMeterBlue: Seed Volt Meter Blue]
 
@@ -85,7 +90,7 @@ toleranceVoltMeter = 0.15; //[-5:0.01:5]
 /* [Sled] */
 
 // Enable a battery sled?
-enableSled = "yes"; // [yes, no]
+enableSled = "no"; // [yes, no]
 // Select your volt meter type
 sledType = "keystone1048"; // [keystone1042: Keystone single 18650 (1042), keystone1042empty: Keystone single 18650 empty (1042), keystone1048: Keystone dual 18650 (1048), keystone1048empty: Keystone dual 18650 empty (1048), keystone1048left: Keystone dual 18650 left (1048), keystone1048right: Keystone dual 18650 right (1048)]
 
@@ -106,7 +111,7 @@ zRotateSled = 0; // [0:360]
 /* [PCB] */
 
 // Enable a pcb?
-enablePcb = "yes"; // [yes, no]
+enablePcb = "no"; // [yes, no]
 // Select PCB
 pcbType = "raptor10a"; // [raptor10a: Naos Raptor 10A, raptor20a: Naos Raptor 20A]
 
@@ -240,23 +245,23 @@ yRotatePassthrough = 90; // [0:360]
 zRotatePassthrough = 0; // [0:360]
 
 /* [Cover] */
-enableCover = "yes"; // [yes, no]
-coverHeight = 1;
-coverTolerance = 0.5;
+enableCover = "no"; // [yes, no]
+coverHeight = 0;
+coverTolerance = 0;
 
 /* [View Mode] */
 
 // If visualisation is enabled, the parts are rendered
 visualize = "yes"; // [yes, no]
 // Which parts of the box to display
-part = "both"; // [both, body, bodycover, cover, lid]
+part = "body"; // [both, body, bodycover, cover, lid]
 
 /* [Hidden] */
 sledColor = "black";
 voltMeterColor = "white";
 
 // Resolution for roundness: higher -> rounder edges -> longer render time
-$fn = 36;
+$fn = $preview ? 36 : 64;
 
 pos510 = [xOffset_510, yOffset_510, zOffset_510];
 posFireSwitch = [xOffsetFireSwitch, yOffsetFireSwitch, zOffsetFireSwitch];

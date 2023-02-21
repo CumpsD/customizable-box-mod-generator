@@ -49,7 +49,7 @@ $fn = 36;
 print = false;
 
 //enclosure(type, part, 0, 1, 0.5);
- 
+
 module enclosure(type, part, boxColor=0, coverHeight=0, coverTolerance=0) {
   if(type == "hammond1550a")
     hammond1550a(part, boxColor, coverHeight, coverTolerance);
@@ -71,6 +71,35 @@ module enclosure(type, part, boxColor=0, coverHeight=0, coverTolerance=0) {
 
   if(type == "hammond1590g")
     hammond1590g(part, boxColor, coverHeight, coverTolerance);
+}
+
+module cumpsd(part="both", boxColor="grey", coverHeight=0, coverTolerance=0, outerLength=30, outerWidth=30, outerHeight=30) {
+  lidHeight = 0;
+
+  innerLength = outerLength - 3;
+  innerWidth = outerWidth - 3;
+  innerHeight = outerHeight - 3;
+
+  postDiameter = 5;
+  postWidthBody = 1.5;
+  postWidthLid = 0;
+  holeDiameterBody = 0;
+  holeDiameterLid = 0;
+
+  xOffsetHole = 0;
+  yOffsetHole = 0;
+
+  outerDiameter = 7;
+
+  hammond(
+    outerLength, outerWidth, outerHeight, lidHeight,
+    innerLength, innerWidth, innerHeight,
+    postWidthBody, holeDiameterBody,
+    postWidthLid, holeDiameterLid,
+    xOffsetHole, yOffsetHole,
+    outerDiameter, postDiameter,
+    part, boxColor,
+    coverHeight, coverTolerance);
 }
 
 module hammond1550a(part="both", boxColor="grey", coverHeight=0, coverTolerance=0) {
@@ -391,7 +420,7 @@ module hammond(
             intersection() {
               translate([0, outerWidth - width, outerHeight - height])
                 cube([length, width, height]);
-              
+
               translate([outerLength, 0, outerHeight])
                 rotate([0,180,0])
                   renderLid();
@@ -421,7 +450,7 @@ module hammond(
         screwPosts(postWidthLid + additionalWallLid + coverTolerance, coverHeight + 2, holeRadiusBody + coverTolerance);
     }
   }
-  
+
   module renderBody() {
     postHeight = bodyHeight - zOffset;
     holeRadius = holeRadiusBody + diameterOffsetBodyHole / 2;
@@ -441,7 +470,7 @@ module hammond(
       postHoles(outerHeight, holeRadius, zOffsetBodyHole);
     }
   }
-  
+
   module renderLid() {
     zOffsetPost = 0.1;
     postHeight = lidHeight - zOffset + zOffsetPost;
@@ -449,7 +478,7 @@ module hammond(
     holeHeight = 3;
     holeRadius = holeRadiusLid + diameterOffsetLidHole / 2;
     zOffsetHole = -zOffset + lidHeight - holeHeight + zOffsetLidHole;
-    
+
     difference() {
       group() {
         difference() {
@@ -461,16 +490,16 @@ module hammond(
 
         translate([0, 0, -zOffsetPost])
           screwPosts(postWidthLid + additionalWallLid, postHeight, holeRadiusLid);
-        
+
         translate([outerLength / 2 - 3.5, yOffset, zOffset])
           cube([7, snapWidth, lidHeight - zOffset + 1]);
-        
+
         translate([outerLength / 2 - 3.5, outerWidth - yOffset - snapWidth, zOffset])
           cube([7, snapWidth, lidHeight - zOffset + 1]);
-        
+
         translate([yOffset, outerWidth / 2 - 3.5, zOffset])
           cube([snapWidth, 7, lidHeight - zOffset + 1]);
-        
+
         translate([outerLength - yOffset - snapWidth, outerWidth / 2 - 3.5, zOffset])
           cube([snapWidth, 7, lidHeight - zOffset + 1]);
       }
@@ -500,13 +529,13 @@ module hammond(
 
     translate([0, outerRadius,outerRadius])
       cube([outerLength, bodyInnerWidth, bodyInnerHeight]);
-    
+
     translate([outerRadius, 0, outerRadius])
       cube([bodyInnerLength, outerWidth,  bodyInnerHeight]);
 
     for(pos = cornersTop)
       translate(pos)
-        cylinder(r=outerRadius, h = bodyInnerHeight);
+        cylinder(r=outerRadius, h=bodyInnerHeight);
 
     //1832 // 7170
     difference() {
@@ -533,7 +562,7 @@ module hammond(
     for(i = [0:3])
       translate(screwPosts[i])
         rotate([0, 0, 90 * i])
-          screwPost(postWidth, height, holeRadius);
+          screwPost(postWidth, height);
   }
 
   module screwPost(postWidth, height) {
@@ -544,8 +573,12 @@ module hammond(
 
       cube([postWidth - postRadius, postWidth , height]);
 
-      translate([offsetRadius, offsetRadius, 0])
-        cylinder(r=postRadius, h=height);
+      // translate([offsetRadius, offsetRadius, 0])
+      //   cylinder(r=postRadius, h=height);
+
+      translate([0, -(postRadius / 2), 0])
+        rotate([0, 0, 45])
+          cube([postWidth, postWidth , height*2]);
     }
   }
 }
