@@ -6,9 +6,9 @@ include <helpers.scad>;
 boxType = "cumpsd"; // [hammond1550a: Hammond 1550A, hammond1550b: Hammond 1550B,hammond1550p: Hammond 1550P,hammond1550q: Hammond 1550Q, hammond1590a: Hammond 1590A, hammond1590b: Hammond 1590B, hammond1590g: Hammond 1590G]
 
 // Only for boxType cumpsd
-boxLength = 50;
+boxLength = 70;
 boxWidth = 50;
-boxHeight = 10;
+boxHeight = 40;
 
 // Select color of the enclosure
 boxColor = "lightgray"; // [gray, silver, black, blue, green, lightgray, orange, purple, red, yellow]
@@ -261,7 +261,7 @@ sledColor = "black";
 voltMeterColor = "white";
 
 // Resolution for roundness: higher -> rounder edges -> longer render time
-$fn = $preview ? 36 : 64;
+$fn = $preview ? 36 : 100;
 
 pos510 = [xOffset_510, yOffset_510, zOffset_510];
 posFireSwitch = [xOffsetFireSwitch, yOffsetFireSwitch, zOffsetFireSwitch];
